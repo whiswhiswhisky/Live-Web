@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Use Flexbox to layout the page</title>
+    <style media="screen">
+
+      .container{
+        background-color: blue;
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+        height: 2000px;
+      }
+
+      #mansory{
+        display : flex;
+        flex-flow: row wrap;
+        margin-left: -8px;
+        width: 100%;
+      }
+
+      #brick{
+        flex: auto;
+        height: 250px;
+        min-width: 150px;
+        margin: 0 8px 8px 0;
+      }
+
+      #brick:nth-child(4n+1) {
+        width: 250px;
+      }
+      #brick:nth-child(4n+1):nth-child(4n+2) {
+        width: 325px;
+      }
+      #brick:nth-child(4n+1):nth-child(4n+3) {
+        width: 180px;
+      }
+      #brick:nth-child(4n+1):nth-child(4n+4) {
+        width: 380px;
+      }
+
+      video {
+        padding: 8px;
+      }
+
+      button{
+        background-color: black; /* Green */
+        border: none;
+        color: white;
+        padding: 80px 60px;
+        text-align: center;
+        text-decoration: none;
+        display: inline;
+        font-size: 16px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+      }
+
+      .button:hover {
+      background-color: #555555; /* Green */
+      color: white;
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <div class="container">
+      <div id = "mansory">
+        <div id = "brick">
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function getRandomInt(max){
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
+      var videoList = [];
+
+      for (i=0; i<50; i++){
+        let v = document.createElement("video");
+        let n;
+        let luck = Math.random();
+        if (luck < 0.45){
+          n = getRandomInt(10);
+          v.src = (n.toString()).concat(".mp4");
+          let size = 150 + Math.random()*50;
+          v.width = size.toString();
+          v.loop = true;
+          v.autoplay = true;
+          v.muted = true;
+          v.classList.add(n.toString())
+          document.getElementById("brick").appendChild(v);
+          // console.log(n)
+          v.addEventListener('loadeddata',function(){
+            v.currentTime = 20;
+          },false);
+          videoList.push(v);
+
+        } else if (luck < 0.85){
+          n = getRandomInt(3)+10;
+          v.src = (n.toString()).concat(".mp4");
+          let size = 30 + Math.random()*80;
+          v.width = size.toString();
+          v.loop = true;
+          v.autoplay = true;
+          v.muted = true;
+          v.classList.add(n.toString())
+          document.getElementById("brick").appendChild(v);
+          // console.log(n)
+          v.addEventListener('loadeddata',function(){
+            v.currentTime = 20;
+          },false);
+          videoList.push(v);
+
+        } else {
+          let b = document.createElement("button");
+          b.innerHTML = "DECISION";
+          b.classList.add("button");
+          let oops = getRandomInt(4);
+          if (oops < 1){
+            b.setAttribute("onclick","makeBig()");
+          } else if (oops < 2) {
+            b.setAttribute("onclick","start()");
+          } else if (oops < 3) {
+            b.setAttribute("onclick","overSingle()");
+          } else if (oops < 4) {
+            b.setAttribute("onclick","stop()");
+          }
+
+          document.getElementById("brick").appendChild(b);
+        }
+      }
+
+      function makeBig(){
+        let thisVideo = document.getElementsByClassName(getRandomInt(12).toString());
+        if (thisVideo.length >0){
+          for (i=0; i<thisVideo.length; i++){
+            thisVideo[i].width+=200;
+          }
+          console.log(thisVideo);
+        } else {
+          alert("No memory retrieved. ")
+        }
+      }
+
+      function overSingle(){
+        let thisVideo = document.getElementsByClassName(getRandomInt(12).toString());
+        if (thisVideo.length >0){
+          for (i=0; i<thisVideo.length; i++){
+            thisVideo[i].src = "over.mp4";
+          }
+          console.log(thisVideo);
+        } else {
+          alert("No memory retrieved. ")
+        }
+      }
+
+      function stop(){
+        if (videoList.length >0){
+          for (i=0; i<videoList.length; i++){
+            videoList[i].pause();
+          }
+        }
+      }
+
+      function start(){
+        if (videoList.length >0){
+          for (i=0; i<videoList.length; i++){
+            videoList[i].play();
+          }
+        }
+      }
+
+
+    </script>
+
+  </body>
+</html>
