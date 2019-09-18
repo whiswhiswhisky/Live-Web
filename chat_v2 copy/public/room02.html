@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Room 02: Is poke bowl salad?</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <script>
+        // Before you can safely use jQuery to do anything to your page, you need to ensure that the page is in a state where it's ready to be manipulated. 
+        // $(function(){ codes }); =shorthand for=> $(documment).ready( function(){codes} );
+        $(function(){
+            //That’s all it takes to load the socket.io-client, which exposes a io global (and the endpoint GET /socket.io/socket.io.js), and then connect.
+            var socket = io();
+
+            //Add a callback function when the form is submitted
+            $('form').submit(function(e){ // what's e? --> shortcut var handler for event object
+                e.preventDefault(); //prevents page reloading
+
+                //then send the message to server with an event signal
+                socket.emit('chat_message', $('#m').val());
+
+                //turn the original '#m' value to blank
+                $('#m').val('');
+                return false; //? 
+            });
+
+            socket.on('chat_message', function(msg){
+                $('#messages').append($('<li>').text(msg));
+            });
+        });
+
+        
+    </script>
+    <script>
+        $(function () {
+          var socket = io();
+
+          $('form').submit(function(e){
+            e.preventDefault(); // prevents page reloading
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+          });
+
+          socket.on('chat message', function(msg){
+            $('#messages').append($('<li>').text(msg));
+          });
+        });
+        
+      </script>
+  </head>
+  <body>
+    <h1>Is poke bowl a salad?</h1>
+    <button id="back" onclick = "window.location.href='/'">Back</button>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
+</html>
