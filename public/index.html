@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+<script src="/socket.io/socket.io.js"></script>
+<style>
+
+canvas {
+    /* border:1px solid #c28e8e;
+    background-color: #f1f1f1;  */
+    background:transparent;
+}
+
+body {
+    text-align: center;
+    background-color: antiquewhite;
+    font-family:monospace;
+    color:saddlebrown;
+}
+
+.title {
+    position:absolute;
+    top: 5%;
+    left:30%;
+    text-align: center;
+}
+
+#hotpot{
+    display:inline-block;
+    visibility: visible;
+    position: absolute;
+    top: -10%;
+    left:10%;
+    z-index: -1;
+}
+
+.bgImg{
+    text-align: center;
+}
+
+.notice{
+    color:red;
+}
+
+#ending{
+    position:absolute;
+    top:20%;
+    left:10%;
+    text-align: center;
+    display: block;
+    /* background-color: black; */
+    color:black;
+}
+
+</style>
+</head>
+
+<body>
+    <div id="gamePage">
+        <div class="title">
+            <h2 id="task"></h2>
+            <p class="instruction">Key A: move left;  Key D: move right</p>
+            <!-- <p class="notice">Danger!!</p> -->
+        </div>
+        
+        <img id="hotpot" width="80%"  src="hotpotSmall.gif"> 
+        <img id="chopsticks" width="557" height="67" src="chopsticks.png" style="display:none">
+    </div>
+    <h1 id="ending">
+        <!-- <button class="rebornBtn">Try Again</button> -->
+    </h1>
+    <script src="/client.js"></script>
+</body>
+</html>
